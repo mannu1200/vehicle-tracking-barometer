@@ -2,20 +2,8 @@
 
 var 
     FS = require('fs'),
-    PATH = require('path');
-
-function getDirectories (srcpath) {
-  return FS.readdirSync(srcpath)
-    .filter(file => FS.lstatSync(PATH.join(srcpath, file)).isDirectory())
-}
-
-function createDir(dirPath) {
-    try {
-        FS.mkdirSync(dirPath);
-    } catch(E) {
-        //console.log("Errorrrr: ", E);
-    }
-}
+    PATH = require('path'),
+    UTILS = require('./utils');
 
 function cloneFiles(source, destination) {
     FS.createReadStream(source).pipe(FS.createWriteStream(destination));
@@ -49,9 +37,9 @@ function getMergedOutputfileName(dir) {
 
 function main(dirPath, destPath, files) {
     
-    var parentDirs = getDirectories(dirPath);
+    var parentDirs = UTILS.getDirectories(dirPath);
     parentDirs.forEach(function(dateDir) {
-        createDir(destPath + dateDir);
+        UTILS.createDir(destPath + dateDir);
         //Copy the data files
         files.forEach(function(dataFile){
             cloneFiles(dirPath + dateDir + '/' + dataFile, destPath + dateDir + '/' + dataFile);
@@ -59,8 +47,11 @@ function main(dirPath, destPath, files) {
         //Copy MergedData file
         var fileName = getMergedOutputfileName(dirPath + dateDir);
         //console.log("File name:", fileName, ' for date: ', dateDir);
+
+        //No matter what value of n is in Mergeddata-n, we are only going to 
+        //save file as mergeData.txt
         if(fileName)
-            cloneFiles(dirPath + dateDir + '/' + fileName, destPath + dateDir + '/' + fileName);
+            cloneFiles(dirPath + dateDir + '/' + fileName, destPath + dateDir + '/MergedOutput.txt');
     });
 }
 

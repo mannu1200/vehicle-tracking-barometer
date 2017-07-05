@@ -13,18 +13,20 @@ Algo:
 1. Parse all mergedOutput-n.txt and create a map of all the unique travel activities.
 output: dataMap: 
 {
-    'YYYYMMDD' : {
-        [[ts1,    ts2,    ts2,    ts3,    ts3]
-        [place1, place1, place2, palce2, place5]]
-    }
-}
+    'YYYYMMDD' : [[ts1,    ts2,    ts2,    ts3,    ts3]
+                    [place1, place1, place2, palce2, place3]],
 
+    'YYYYMMDD' : [[ts1,    ts2,    ts2,    ts3,    ts3]
+                    [place1, place1, place2, palce2, place3]],
+
+}
+n
 2. Parse the barometer files:
 We have date and timestamp
 currentDate
 timestamp
 //Get the place for given timestamp
-update:
+create:
 dataMap : {
     'vehicle' : {
         'date' : [].push(readings)
