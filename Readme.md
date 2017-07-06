@@ -27,7 +27,7 @@ currentDate
 timestamp
 //Get the place for given timestamp
 create:
-dataMap : {
+finalMap : {
     'vehicle' : {
         'date' : [].push(readings)
     }

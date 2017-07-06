@@ -132,7 +132,7 @@ function processBaroFile(dir, cb) {
                 finalMap[vehicle][date] = [];
             
             //TODO: confirm if its row[2] or row[3]
-            finalMap[vehicle][date].push(row[2]);
+            finalMap[vehicle][date].push(row[3]);
             //console.log(finalMap, "BOOOOOOOOOOOOOOOOOOM");
             if(i%500 == 0)
                     return process.nextTick(callback);
