@@ -58,7 +58,7 @@ function main(dirPath, destPath, files) {
 (function() {
     if (require.main == module) {
         var
-            dir = process.argv[2] || '/Volumes/Untitled/TravelDiaryApp/',
+            dir = process.argv[2] || '/Volumes/Untitled/New\ folder/TravelDiaryApp/',
             destinationDir = 'dataFiles/',
             files = ['Baro.txt'];
             
