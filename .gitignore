@@ -1,4 +1,5 @@
 *.txt
+!gnu*.txt
 node_modules/
 dtwCode
 .DS_Store

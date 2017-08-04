@@ -17,7 +17,7 @@ function dumpArrayToFiles(arr, filePath) {
     file.end();
 }
 
-function isDateFormat(dateStr){
+function isDateFormat(dateStr) {
     var regex = /201[7,8]-[0,1][0-9]-[0-3][0-9]/;
     if(dateStr && dateStr.match(regex))
         return true;
