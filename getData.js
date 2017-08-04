@@ -131,8 +131,7 @@ function processBaroFile(dir, cb) {
             if(!finalMap[vehicle][date])
                 finalMap[vehicle][date] = [];
             
-            //TODO: confirm if its row[2] or row[3]
-            finalMap[vehicle][date].push(row[3]);
+            finalMap[vehicle][date].push( row[1].toString() + "," + row[3].toString());
             //console.log(finalMap, "BOOOOOOOOOOOOOOOOOOM");
             if(i%500 == 0)
                     return process.nextTick(callback);
@@ -150,7 +149,7 @@ function saveTheData(outPutDir) {
         Object.keys(finalMap[vehicleKey]).forEach(function(dateKey){
             //createDir(outPutDir + vehicleKey + '/' + dateKey);
             dumpArrayToFiles(finalMap[vehicleKey][dateKey], 
-                outPutDir + vehicleKey + '/' + dateKey + '.dump' );
+                outPutDir + vehicleKey + '/' + dateKey + '.txt' );
         });
     });
 }
@@ -158,7 +157,6 @@ function saveTheData(outPutDir) {
 function main(filesDir, cb) {
     //Get all the sub dir in the given dir (Sub dir shld be of format YYYY-MM-DD)
     var subDirs = UTILS.getDirectories(filesDir);
-
     async.each(subDirs, function(subDir, done) {
         if(!isDateFormat(subDir)) {
             //Some garbage dir, continue the loop
@@ -192,7 +190,7 @@ function main(filesDir, cb) {
 (function() {
     if (require.main == module) {
         var 
-            dataDir = '/Users/mannumalhotra/code/nus/vehicle-tracking-barometer/dataFiles/',
+            dataDir = '/Users/mannumalhotra/code/nus/vehicle-tracking-barometer/archived-data/dataFiles/',
             firDir = dataDir + '2017-06-01/MergedOutput-2.txt';
         //console.log(isDateFormat('2017-05-31'));
         //getFileData(fileDir, console.log);
