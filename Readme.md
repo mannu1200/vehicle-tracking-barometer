@@ -46,6 +46,18 @@
     Output:
     groundTruth.txt file in every sub dir of output/ 
 
+  4. Normalize timestamp:
+    We dont want to use unix timestamp in the plots, this script replace the 
+    unix timestamp with the time difference form the first entry (start of journey)
+    Hence every file will have zero as first entry
+    e.g.
+    node normalizeTimestamps.js
+
+  5. Plot the data:
+    Real business, plot the data
+    For every transit type plot a graph between ground truth and given data
+    e.g.
+    node plotCreator.js
 
 
 ### Algo:
@@ -74,5 +86,6 @@ finalMap : {
 }
 
 
-TODO:
-Include loc in output of step 2 (in output data)
+#### TODO:
+  1. Include loc in output of step 2 (in output data)
+  2. Write a bash script for execution steps

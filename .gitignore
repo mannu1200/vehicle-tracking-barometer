@@ -4,3 +4,4 @@ node_modules/
 dtwCode
 .DS_Store
 *.swp
+*.class

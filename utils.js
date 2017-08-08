@@ -15,12 +15,12 @@ module.exports = {
         try {
             FS.mkdirSync(dirPath);
         } catch(E) {
-            console.log("Errorrrr: ", E);
+            //console.log("Errorrrr: ", E);
         }
     },
 
     isDateFormat: function(dateStr) {
-        var regex = /201[7,8]-[0,1][0-9]-[0-3][0-9]/;
+        var regex = /201[7,8]-[0,1][0-9]-([0-3][0-9]|[0-9])/;
         if(dateStr && dateStr.match(regex))
             return true;
         return false;
@@ -29,6 +29,20 @@ module.exports = {
     cloneFiles: function(source, destination) {
         if(FS.existsSync(source))
             FS.createReadStream(source).pipe(FS.createWriteStream(destination));   
+    },
+
+    dumpArrayToFiles: function(arr, filePath) {
+        var file = FS.createWriteStream(filePath);
+        file.on('error', function(err) { /* error handling */ });
+        arr.forEach(function(v, i) {
+            if (i === arr.length - 1) {
+                file.write(v);
+            } else {
+                file.write(v + '\n');
+            }
+        });
+
+        file.end();
     }
 
 }

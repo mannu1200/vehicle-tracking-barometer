@@ -10,7 +10,7 @@ set ytics 2
 set grid
 set key top right
 # NOTE: Dashed lines appear only if 'dashed' specified :P
-set terminal pdf dashed
+set terminal jpeg
 set datafile separator ","
 
 # Arrow properties

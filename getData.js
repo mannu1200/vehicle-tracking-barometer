@@ -10,20 +10,6 @@ var
     async = require('async'),
     hasPrinted = [];
 
-function dumpArrayToFiles(arr, filePath) {
-    var file = FS.createWriteStream(filePath);
-    file.on('error', function(err) { /* error handling */ });
-    arr.forEach(function(v, i) {
-        if (i === arr.length - 1) {
-            file.write(v);
-        } else {
-            file.write(v + '\n');
-        }
-    });
-
-    file.end();
-}
-
 function getFileData(filePath, delimiter, cb) {
     //console.log("Going to read file:", filePath);
     if(!FS.existsSync(filePath)) {
@@ -151,7 +137,7 @@ function saveTheData(outPutDir) {
         UTILS.createDir(outPutDir + vehicleKey);
         Object.keys(finalMap[vehicleKey]).forEach(function(dateKey){
             //createDir(outPutDir + vehicleKey + '/' + dateKey);
-            dumpArrayToFiles(finalMap[vehicleKey][dateKey], 
+            UTILS.dumpArrayToFiles(finalMap[vehicleKey][dateKey], 
                 outPutDir + vehicleKey + '/' + dateKey + '.txt' );
         });
     });
