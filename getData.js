@@ -13,15 +13,15 @@ var
 function dumpArrayToFiles(arr, filePath) {
     var file = FS.createWriteStream(filePath);
     file.on('error', function(err) { /* error handling */ });
-    arr.forEach(function(v) { file.write(v + '\n'); });
-    file.end();
-}
+    arr.forEach(function(v, i) {
+        if (i === arr.length - 1) {
+            file.write(v);
+        } else {
+            file.write(v + '\n');
+        }
+    });
 
-function isDateFormat(dateStr) {
-    var regex = /201[7,8]-[0,1][0-9]-[0-3][0-9]/;
-    if(dateStr && dateStr.match(regex))
-        return true;
-    return false;
+    file.end();
 }
 
 function getFileData(filePath, delimiter, cb) {
@@ -39,7 +39,10 @@ function getFileData(filePath, delimiter, cb) {
 //GEt YYYY-MM-DD string corresponding to given unix timestamp
 function getDate(unixTimeStamp) {
     var date = new Date(parseInt(unixTimeStamp));
-    date = date.getFullYear() + '-' + parseInt(date.getMonth() + 1) + '-' + date.getDate();
+    var month = parseInt(date.getMonth() + 1)
+    if(month < 10)
+        month = '0' + month;
+    date = date.getFullYear() + '-' + month + '-' + date.getDate();
     //console.log(date, '###################', unixTimeStamp);
     return date;
 }
@@ -158,7 +161,7 @@ function main(filesDir, cb) {
     //Get all the sub dir in the given dir (Sub dir shld be of format YYYY-MM-DD)
     var subDirs = UTILS.getDirectories(filesDir);
     async.each(subDirs, function(subDir, done) {
-        if(!isDateFormat(subDir)) {
+        if(!UTILS.isDateFormat(subDir)) {
             //Some garbage dir, continue the loop
             console.log(subDir, " should not be there in ", filesDir, " dir");
             return done();
@@ -171,7 +174,7 @@ function main(filesDir, cb) {
 
         console.log("Starting the processing on Baro files:");
         async.eachLimit(subDirs, 1, function(subDir, done) {
-            if(!isDateFormat(subDir)) {
+            if(!UTILS.isDateFormat(subDir)) {
                 //Some garbage dir, continue the loop
                 console.log(subDir, " should not be there in ", filesDir, " dir");
                 return done();
@@ -190,9 +193,8 @@ function main(filesDir, cb) {
 (function() {
     if (require.main == module) {
         var 
-            dataDir = '/Users/mannumalhotra/code/nus/vehicle-tracking-barometer/archived-data/dataFiles/',
-            firDir = dataDir + '2017-06-01/MergedOutput-2.txt';
-        //console.log(isDateFormat('2017-05-31'));
+            dataDir = process.argv[2] || './dataFiles/';
+        //console.log(UTILS.isDateFormat('2017-05-31'));
         //getFileData(fileDir, console.log);
         //console.log(getDate(1496314965958));
         main(dataDir, function(err){

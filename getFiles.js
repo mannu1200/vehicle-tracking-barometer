@@ -5,10 +5,6 @@ var
     PATH = require('path'),
     UTILS = require('./utils');
 
-function cloneFiles(source, destination) {
-    FS.createReadStream(source).pipe(FS.createWriteStream(destination));
-}
-
 function getMergedOutputfileName(dir) {
     var list = [];
     FS.readdirSync(dir).forEach(file => {
@@ -41,8 +37,9 @@ function main(dirPath, destPath, files) {
     parentDirs.forEach(function(dateDir) {
         UTILS.createDir(destPath + dateDir);
         //Copy the data files
-        files.forEach(function(dataFile){
-            cloneFiles(dirPath + dateDir + '/' + dataFile, destPath + dateDir + '/' + dataFile);
+        files.forEach(function(dataFile) {
+            console.log("Calling clone files:" + dirPath + dateDir + '/' + dataFile);
+            UTILS.cloneFiles(dirPath + dateDir + '/' + dataFile, destPath + dateDir + '/' + dataFile);
         });
         //Copy MergedData file
         var fileName = getMergedOutputfileName(dirPath + dateDir);
@@ -51,7 +48,7 @@ function main(dirPath, destPath, files) {
         //No matter what value of n is in Mergeddata-n, we are only going to 
         //save file as mergeData.txt
         if(fileName)
-            cloneFiles(dirPath + dateDir + '/' + fileName, destPath + dateDir + '/MergedOutput.txt');
+            UTILS.cloneFiles(dirPath + dateDir + '/' + fileName, destPath + dateDir + '/MergedOutput.txt');
     });
 }
 
@@ -60,7 +57,7 @@ function main(dirPath, destPath, files) {
         var
             dir = process.argv[2] || '/Volumes/Untitled/New\ folder/TravelDiaryApp/',
             destinationDir = 'dataFiles/',
-            files = ['Baro.txt'];
+            files = ['Baro.txt', 'Loc.txt'];
             
         main(dir, destinationDir, files);
        //console.log(getMergedOutputfileName(dir + '2017-06-01/'));
