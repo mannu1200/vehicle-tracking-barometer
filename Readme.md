@@ -4,6 +4,7 @@
 
 ### Steps of execution:
   1. Get the data files (Baro.txt,Loc.txt) and MergedOutput files from the source (Android):
+    
     node getFiles.js sourceDirPath
     Where
     sourceDirPath is the TravelDiaryApp dir from your android. 
