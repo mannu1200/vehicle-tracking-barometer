@@ -19,6 +19,7 @@
 
 
   2. Get the desired data (barometer readings and timestamp):
+  
     node getData.js dataDirPath
     Where
     dataDirPath is the output from first script [default: './dataFiles/']
@@ -52,12 +53,14 @@
     unix timestamp with the time difference form the first entry (start of journey)
     Hence every file will have zero as first entry
     e.g.
+    
     node normalizeTimestamps.js
 
   5. Plot the data:
     Real business, plot the data
     For every transit type plot a graph between ground truth and given data
     e.g.
+    
     node plotCreator.js
 
 
